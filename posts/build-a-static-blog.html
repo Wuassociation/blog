@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>用纯静态文件搭一个能长期维护的博客 · 我的博客</title>
+    <meta name="description" content="零依赖、零构建、能双击打开也能直接部署。讲讲这个站点自身的结构，以及我为什么放弃主题和插件。" />
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6feb'/%3E%3C/svg%3E" />
+    <script>
+      try {
+        var saved = localStorage.getItem("blog-theme");
+        if (saved === "dark" || saved === "light") {
+          document.documentElement.setAttribute("data-theme", saved);
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    </script>
+  </head>
+
+  <body data-page="post" data-root="..">
+    <a class="skip-link" href="#main">跳到正文</a>
+    <div class="progress" data-progress aria-hidden="true"></div>
+    <header data-header></header>
+
+    <main id="main">
+      <div class="container">
+        <div class="post-header">
+          <a class="back-link" href="../index.html">← 返回文章列表</a>
+          <h1>用纯静态文件搭一个能长期维护的博客</h1>
+          <div class="post-header__meta" data-post-meta></div>
+        </div>
+
+        <nav class="toc" data-toc aria-label="目录"></nav>
+
+        <article class="prose">
+          <p>
+            这个博客本身没有任何依赖：没有框架、没有打包器、没有数据库，<code>package.json</code> 里
+            连一个 <code>dependencies</code> 字段都没有。它由一组 HTML 文件、一个 CSS、
+            两个 JS 和三个几十行的 Node 脚本组成。这篇文章讲清楚它是怎么组织的，
+            以及为什么我认为这种「看起来有点土」的方案在个人博客场景下几乎总是更优解。
+          </p>
+
+          <h2>先明确：个人博客到底需要什么</h2>
+          <p>
+            绝大多数个人博客的真实需求只有四条：把文章发到网上、能改样式、能长期保存内容、更新起来不痛苦。
+            主题商店、评论系统、阅读统计、花哨的交互，这些是加分项，但它们不该成为「网站能不能跑起来」的前提。
+          </p>
+          <p>反过来看静态方案的收益非常直接：</p>
+          <table>
+            <thead>
+              <tr>
+                <th>维度</th>
+                <th>静态文件</th>
+                <th>带后端 / 构建链</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>部署</td>
+                <td>拖上去就行，任意静态托管都支持</td>
+                <td>需要运行时、环境变量、构建步骤</td>
+              </tr>
+              <tr>
+                <td>十年后还能打开吗</td>
+                <td>能，浏览器还在就能</td>
+                <td>取决于依赖还能不能装</td>
+              </tr>
+              <tr>
+                <td>改样式</td>
+                <td>改 CSS 变量，立刻生效</td>
+                <td>可能要重编译主题</td>
+              </tr>
+              <tr>
+                <td>速度</td>
+                <td>纯静态，几乎不需要优化</td>
+                <td>视实现而定</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>目录结构</h2>
+          <pre><code>.
+├── index.html          首页：自我介绍 + 文章列表
+├── about.html          关于页
+├── 404.html            找不到页面时展示
+├── posts/              每篇文章一个 HTML 文件
+│   └── hello-world.html
+├── assets/
+│   ├── style.css       全部样式，浅色 / 深色两套变量
+│   ├── site.js         页头页脚、主题切换、搜索、目录
+│   └── posts-data.js   文章索引：全站唯一的数据源
+├── server.mjs          零依赖本地预览服务器
+├── build.mjs           生成 RSS、站点地图、无 JS 兜底列表
+└── new-post.mjs        新建文章的命令行工具</code></pre>
+
+          <h2>关键设计一：只有一个数据源</h2>
+          <p>
+            文章元信息（标题、日期、标签、摘要）全部放在 <code>assets/posts-data.js</code> 里。
+            首页列表、搜索、标签筛选、上一篇 / 下一篇、相关文章、RSS，全部从这里读。
+            这样就不存在「改了标题但 RSS 还是旧标题」这类不一致。
+          </p>
+          <pre><code>window.POSTS = [
+  {
+    slug: "hello-world",
+    title: "为什么我又开始写博客了",
+    date: "2026-10-01",
+    tags: ["随笔", "写作"],
+    summary: "……",
+    file: "posts/hello-world.html",
+  },
+];</code></pre>
+          <p>
+            用 <code>window.</code> 而不是 <code>export</code> 是刻意的：ES Module 在
+            <code>file://</code> 协议下会被浏览器的 CORS 策略拦住，而普通脚本不会。
+            这换来了一个很实在的好处 —— 双击 <code>index.html</code> 就能看效果，不需要先起服务器。
+          </p>
+
+          <h2>关键设计二：每篇文章是真实存在的页面</h2>
+          <p>
+            有些极简博客把所有文章塞进一个页面，再用前端路由切换。那样确实省事，但代价是：
+            单篇文章没有独立 URL，分享出去只能指向首页，搜索引擎也很难收录。
+          </p>
+          <p>
+            这里每篇文章是独立的 HTML 文件，路径就是它的地址，例如
+            <code>/posts/build-a-static-blog.html</code>。页面里的页头、页脚、目录、
+            上下篇导航由 JS 注入，所以没有复制粘贴的负担，但正文和 URL 是真实存在的。
+          </p>
+
+          <h2>关键设计三：没有构建也能跑</h2>
+          <p>
+            全站只有 <code>build.mjs</code> 一个「构建」步骤，而它做的事情完全不影响网站运行 ——
+            只是从 <code>posts-data.js</code> 生成 RSS、站点地图，以及首页里那份给
+            「禁用 JavaScript 的访客」看的兜底列表。就算你从不运行它，网站照样能正常打开。
+          </p>
+
+          <h2>怎么开始用</h2>
+          <p>把它复制到本地之后，日常只需要三条命令：</p>
+          <pre><code>npm start                      # 启动本地服务器，打开 http://localhost:4321
+npm run new -- "文章标题" my-post-slug   # 新建一篇文章
+npm run build                  # 重新生成 RSS 和站点地图</code></pre>
+          <p>
+            <code>npm run new</code> 会做三件事：按模板生成 <code>posts/my-post-slug.html</code>、
+            把元信息写进 <code>posts-data.js</code>、顺手执行一次 build。之后你只需要打开那个文件，
+            在 <code>&lt;article class="prose"&gt;</code> 里写正文。
+          </p>
+
+          <div class="note">
+            <strong>部署：</strong>把这个目录直接拖到 GitHub Pages、Cloudflare Pages、Vercel
+            或者任何对象存储上都行，不需要指定构建命令和输出目录。
+            唯一要做的是把 <code>assets/site.js</code> 里的 <code>url</code> 改成真实域名，
+            这样 RSS 里的链接才是绝对地址。
+          </div>
+
+          <h2>这个方案不适合什么</h2>
+          <p>
+            说清楚边界：如果你需要评论、会员、全文检索上千篇文章，或者多人协作写作加审核流程，
+            那么静态方案会很快变成负担，应该老实用框架加数据库。但对「一个人、几百篇文章、
+            主要是记录」这个场景来说，我觉得很难有更省心的选择。
+          </p>
+        </article>
+
+        <nav class="post-nav" data-post-nav aria-label="文章导航"></nav>
+        <section data-related></section>
+      </div>
+    </main>
+
+    <footer data-footer></footer>
+
+    <script src="../assets/posts-data.js"></script>
+    <script src="../assets/site.js"></script>
+  </body>
+</html>

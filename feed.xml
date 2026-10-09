@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>我的博客</title>
+    <link>https://wuassociation.github.io/blog</link>
+    <description>记录技术、阅读和一些还没想清楚的想法。</description>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 01 Oct 2026 01:00:00 GMT</lastBuildDate>
+    <atom:link href="https://wuassociation.github.io/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>为什么我又开始写博客了</title>
+      <link>https://wuassociation.github.io/blog/posts/hello-world.html</link>
+      <guid isPermaLink="true">https://wuassociation.github.io/blog/posts/hello-world.html</guid>
+      <pubDate>Thu, 01 Oct 2026 01:00:00 GMT</pubDate>
+      <description>真正让我重新坐下来敲字的，不是「输出倒逼输入」这类漂亮话，而是发现自己的很多想法，说不清就真的会消失。</description>
+      <category>随笔</category>
+      <category>写作</category>
+    </item>
+    <item>
+      <title>用纯静态文件搭一个能长期维护的博客</title>
+      <link>https://wuassociation.github.io/blog/posts/build-a-static-blog.html</link>
+      <guid isPermaLink="true">https://wuassociation.github.io/blog/posts/build-a-static-blog.html</guid>
+      <pubDate>Sun, 20 Sep 2026 01:00:00 GMT</pubDate>
+      <description>零依赖、零构建、能双击打开也能直接部署。讲讲这个站点自身的结构，以及我为什么放弃主题和插件。</description>
+      <category>前端</category>
+      <category>工程</category>
+    </item>
+    <item>
+      <title>2026 年读书笔记：关于专注的三本书</title>
+      <link>https://wuassociation.github.io/blog/posts/reading-notes-2026.html</link>
+      <guid isPermaLink="true">https://wuassociation.github.io/blog/posts/reading-notes-2026.html</guid>
+      <pubDate>Wed, 12 Aug 2026 01:00:00 GMT</pubDate>
+      <description>三本气质完全不同的书放在一起读，最后指向同一件事：注意力是需要被保护的资源，而不是取之不尽的天赋。</description>
+      <category>读书</category>
+      <category>随笔</category>
+    </item>
+  </channel>
+</rss>

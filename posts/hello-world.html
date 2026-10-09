@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>为什么我又开始写博客了 · 我的博客</title>
+    <meta name="description" content="真正让我重新坐下来敲字的，不是「输出倒逼输入」这类漂亮话，而是发现自己的很多想法，说不清就真的会消失。" />
+    <link rel="stylesheet" href="../assets/style.css" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6feb'/%3E%3C/svg%3E" />
+    <script>
+      try {
+        var saved = localStorage.getItem("blog-theme");
+        if (saved === "dark" || saved === "light") {
+          document.documentElement.setAttribute("data-theme", saved);
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    </script>
+  </head>
+
+  <body data-page="post" data-root="..">
+    <a class="skip-link" href="#main">跳到正文</a>
+    <div class="progress" data-progress aria-hidden="true"></div>
+    <header data-header></header>
+
+    <main id="main">
+      <div class="container">
+        <div class="post-header">
+          <a class="back-link" href="../index.html">← 返回文章列表</a>
+          <h1>为什么我又开始写博客了</h1>
+          <div class="post-header__meta" data-post-meta></div>
+        </div>
+
+        <nav class="toc" data-toc aria-label="目录"></nav>
+
+        <article class="prose">
+          <p>
+            上一次认真写博客，大概还是很多年前。那会儿写东西的理由很简单：刚学编程，什么都新鲜，
+            写下来像是给自己存档。后来工作变忙，笔记从博客挪到了各种碎片化的地方 —— 备忘录、聊天窗口、
+            编辑器里没来得及命名的文件。存是存下来了，但从来没再打开过。
+          </p>
+
+          <p>
+            真正让我重新坐下来敲字的，不是「输出倒逼输入」这类漂亮话。是我发现自己的很多想法，
+            一旦说不清楚，过一段时间就真的消失了。我以为自己理解了一件事，其实只是记住了它的结论。
+          </p>
+
+          <h2>写下来，是为了知道自己到底懂多少</h2>
+          <p>
+            有个反复出现的体验：一件事在脑子里转的时候，逻辑是顺的；一旦要写成文字给别人看，
+            立刻就会卡在某一句上 —— 那句话里的因果关系其实是我脑补的，我并没有真的想清楚。
+          </p>
+          <p>
+            所以写作对我来说更像一种检测手段，而不是展示。博客是这个检测的公开版本，
+            它逼我把话说完整：前提是什么、为什么这么判断、什么情况下这个结论会失效。
+          </p>
+
+          <blockquote>
+            <p>如果一件事你没法用几段话讲清楚，那通常不是表达问题，而是理解还没到位。</p>
+          </blockquote>
+
+          <h2>为什么不做「日更」</h2>
+          <p>
+            我试过给自己定更新频率，结果只收获了一堆凑数的稿子。凑数的东西写多了，
+            会让人对「写」这件事本身失去兴趣，因为它变成了一项待办事项。
+          </p>
+          <p>现在我的规则只有三条：</p>
+          <ul>
+            <li>有真的想说的才写，写完自己愿意再读一遍；</li>
+            <li>宁可短，也不要为了篇幅注水；</li>
+            <li>写不出来就先放着，草稿留在本地，不给自己压力。</li>
+          </ul>
+
+          <h2>这个博客会写些什么</h2>
+          <p>大致分三类：</p>
+          <ol>
+            <li><strong>工程笔记</strong>：踩过的坑、做过的取舍，以及事后复盘觉得当时应该怎么做。</li>
+            <li><strong>读书摘录</strong>：不是书评，更多是「这句话让我想到什么」。</li>
+            <li><strong>随笔</strong>：那些还没想清楚、但值得写下来慢慢想的事。</li>
+          </ol>
+
+          <p>
+            如果你也对其中某一块感兴趣，欢迎从<a href="build-a-static-blog.html">这篇讲博客本身是怎么搭的</a>开始看，
+            或者直接写信给我。
+          </p>
+        </article>
+
+        <nav class="post-nav" data-post-nav aria-label="文章导航"></nav>
+        <section data-related></section>
+      </div>
+    </main>
+
+    <footer data-footer></footer>
+
+    <script src="../assets/posts-data.js"></script>
+    <script src="../assets/site.js"></script>
+  </body>
+</html>

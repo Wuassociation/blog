@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>关于 · 我的博客</title>
+    <meta name="description" content="关于这个博客和它的作者。" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6feb'/%3E%3C/svg%3E" />
+    <script>
+      try {
+        var saved = localStorage.getItem("blog-theme");
+        if (saved === "dark" || saved === "light") {
+          document.documentElement.setAttribute("data-theme", saved);
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    </script>
+  </head>
+
+  <body data-page="about" data-root=".">
+    <a class="skip-link" href="#main">跳到正文</a>
+    <header data-header></header>
+
+    <main id="main">
+      <div class="container container--wide">
+        <div class="page-header">
+          <h1>关于</h1>
+          <p>一个用来安放想法的地方。没有算法推荐，也暂时没有评论区 —— 想聊天的话，直接给我写邮件。</p>
+        </div>
+
+        <article class="prose">
+          <h2>关于这个博客</h2>
+          <p>
+            这里主要写三类东西：技术和工程上踩过的坑、读书时记下的句子和想法，以及那些一时想不明白、但值得写下来慢慢想的事。
+            我不追求更新频率，更在意每篇写完之后，自己是不是真的比以前清楚了一点。
+          </p>
+
+          <h2>关于我</h2>
+          <p>
+            写代码的人，偶尔写点别的。日常在做的项目、在用的工具都会零零散散地出现在这里。
+            如果某篇文章帮到了你，或者你有不同的看法，欢迎写信告诉我。
+          </p>
+
+          <h2>联系方式</h2>
+          <ul>
+            <li>邮箱：<a href="mailto:you@example.com">you@example.com</a></li>
+            <li>GitHub：<a href="https://github.com/">github.com/你的账号</a></li>
+            <li>订阅：<a href="feed.xml">RSS</a></li>
+          </ul>
+
+          <div class="note">
+            <strong>想改这段文字？</strong>
+            全站的站名、作者、简介和社交链接都集中在 <code>assets/site.js</code>，
+            本页的正文则在 <code>about.html</code> 里，直接改就行。
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <footer data-footer></footer>
+
+    <script src="assets/site.js"></script>
+  </body>
+</html>

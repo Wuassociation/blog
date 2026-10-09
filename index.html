@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>我的博客</title>
+    <meta name="description" content="记录技术、阅读和一些还没想清楚的想法。" />
+    <meta name="author" content="你的名字" />
+
+    <!-- 社交分享卡片（部署后可换成真实网址与图片） -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="我的博客" />
+    <meta property="og:description" content="记录技术、阅读和一些还没想清楚的想法。" />
+
+    <link rel="alternate" type="application/atom+xml" title="RSS" href="feed.xml" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6feb'/%3E%3C/svg%3E" />
+
+    <!-- 在渲染前恢复配色，避免刷新时闪白 -->
+    <script>
+      try {
+        var saved = localStorage.getItem("blog-theme");
+        if (saved === "dark" || saved === "light") {
+          document.documentElement.setAttribute("data-theme", saved);
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    </script>
+  </head>
+
+  <body data-page="home" data-root=".">
+    <a class="skip-link" href="#main">跳到正文</a>
+    <header data-header></header>
+
+    <main id="main">
+      <section class="hero">
+        <div class="container container--wide">
+          <div class="hero__top">
+            <div class="avatar" aria-hidden="true">我</div>
+            <div>
+              <h1>你好，我是这个博客的作者</h1>
+            </div>
+          </div>
+          <p class="hero__bio">
+            我在这里写点技术笔记、读书摘录，以及那些如果不写下来就会忘掉的念头。更新频率随缘，但每篇都会认真写。
+          </p>
+          <ul class="socials">
+            <li><a href="https://github.com/">GitHub</a></li>
+            <li><a href="mailto:you@example.com">邮箱</a></li>
+            <li><a href="feed.xml">RSS</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="section" id="latest">
+        <div class="container container--wide">
+          <div class="section__head">
+            <h2 class="section__title">最新文章</h2>
+            <span class="post-card__meta" data-count></span>
+          </div>
+
+          <div class="toolbar">
+            <label class="search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="7" />
+                <path d="m20 20-3.6-3.6" />
+              </svg>
+              <input type="search" placeholder="搜索标题、摘要或标签…" data-search aria-label="搜索文章" />
+            </label>
+            <div class="tag-filter" data-tag-filter role="group" aria-label="按标签筛选"></div>
+          </div>
+
+          <ul class="post-list" data-post-list>
+            <!-- 文章列表由 assets/site.js 依据 assets/posts-data.js 生成 -->
+          </ul>
+
+          <noscript>
+            <div class="empty-state">
+              <strong>需要开启 JavaScript 才能看到完整文章列表</strong>
+              <p>下面是最新的几篇，也可以直接打开 <code>assets/posts-data.js</code> 查看全部：</p>
+              <ul class="post-list">
+                <!-- BEGIN:POST_LINKS -->
+                <li class="post-card">
+                  <h3 class="post-card__title"><a href="posts/hello-world.html">为什么我又开始写博客了</a></h3>
+                </li>
+                <li class="post-card">
+                  <h3 class="post-card__title"><a href="posts/build-a-static-blog.html">用纯静态文件搭一个能长期维护的博客</a></h3>
+                </li>
+                <li class="post-card">
+                  <h3 class="post-card__title"><a href="posts/reading-notes-2026.html">2026 年读书笔记：关于专注的三本书</a></h3>
+                </li>
+                <!-- END:POST_LINKS -->
+              </ul>
+              <p>（这份列表由 <code>npm run build</code> 自动同步）</p>
+            </div>
+          </noscript>
+        </div>
+      </section>
+    </main>
+
+    <footer data-footer></footer>
+
+    <script src="assets/posts-data.js"></script>
+    <script src="assets/site.js"></script>
+  </body>
+</html>

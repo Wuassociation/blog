@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>页面走丢了 · 我的博客</title>
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%232f6feb'/%3E%3C/svg%3E" />
+    <script>
+      try {
+        var saved = localStorage.getItem("blog-theme");
+        if (saved === "dark" || saved === "light") {
+          document.documentElement.setAttribute("data-theme", saved);
+        } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {}
+    </script>
+  </head>
+
+  <body data-page="404" data-root=".">
+    <header data-header></header>
+
+    <main id="main">
+      <div class="container">
+        <div class="center-page">
+          <div>
+            <h1>404</h1>
+            <p>这个地址上没有内容，可能是链接写错了，也可能是文章被移走了。</p>
+            <p><a href="index.html">← 回到首页</a></p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer data-footer></footer>
+
+    <script src="assets/site.js"></script>
+  </body>
+</html>

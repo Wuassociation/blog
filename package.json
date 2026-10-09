@@ -1,0 +1,16 @@
+{
+  "name": "personal-blog",
+  "version": "1.0.0",
+  "private": true,
+  "description": "零依赖的纯静态个人博客",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node server.mjs",
+    "build": "node build.mjs",
+    "new": "node new-post.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
